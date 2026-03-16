@@ -74,7 +74,12 @@ def prepare_data(movie_id, movie_name):
                 else:
                     cmt_dict["content"] = np.nan
 
-                comment_pd = comment_pd.append(cmt_dict, ignore_index=True)
+                #comment_pd = comment_pd.append(cmt_dict, ignore_index=True)
+                # 第一步：将字典转成DataFrame（append可直接接字典，concat必须接DataFrame/Series列表）
+                cmt_df = pd.DataFrame([cmt_dict])
+
+                # 第二步：用pd.concat替代append，实现相同的追加效果
+                comment_pd = pd.concat([comment_pd, cmt_df], ignore_index=True)
             print(comment_pd)
         else:
             print("No data")
